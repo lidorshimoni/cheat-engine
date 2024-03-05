@@ -1,0 +1,328 @@
+diff --git a/Cheat Engine/cheatengine.ico b/Cheat Engine/cheatengine.ico
+index fa252199..a0cf3c22 100755
+Binary files a/Cheat Engine/cheatengine.ico and b/Cheat Engine/cheatengine.ico differ
+diff --git a/Cheat Engine/cheatengine.lpi b/Cheat Engine/cheatengine.lpi
+index af4358e7..da935908 100755
+--- a/Cheat Engine/cheatengine.lpi	
++++ b/Cheat Engine/cheatengine.lpi	
+@@ -9,11 +9,11 @@
+       </Flags>
+       <SessionStorage Value="InProjectDir"/>
+       <AutoCreateForms Value="False"/>
+-      <Title Value="Cheat Engine 7.5"/>
++      <Title Value="LidorCE 7.5"/>
+       <UseXPManifest Value="True"/>
+       <XPManifest>
+         <DpiAware Value="True"/>
+-        <TextName Value="Cheat Engine"/>
++        <TextName Value="LidorCE"/>
+         <TextDesc Value="Scripting language and tools"/>
+       </XPManifest>
+       <Icon Value="0"/>
+@@ -27,10 +27,10 @@
+       <AutoIncrementBuild Value="True"/>
+       <MajorVersionNr Value="7"/>
+       <MinorVersionNr Value="5"/>
+-      <BuildNr Value="7671"/>
++      <BuildNr Value="1"/>
+       <Language Value="041C"/>
+       <CharSet Value="04B0"/>
+-      <StringTable CompanyName="Cheat Engine" FileDescription="Cheat Engine" ProductVersion="7.5"/>
++      <StringTable CompanyName="LidorCE" FileDescription="LidorCE" ProductVersion="7.5"/>
+     </VersionInfo>
+     <BuildModes Count="11">
+       <Item1 Name="Release 32-Bit" Default="True"/>
+@@ -39,7 +39,7 @@
+           <Version Value="11"/>
+           <PathDelim Value="\"/>
+           <Target>
+-            <Filename Value="bin\cheatengine-$(TargetCPU)"/>
++            <Filename Value="bin\LidorCE-$(TargetCPU)"/>
+           </Target>
+           <SearchPaths>
+             <IncludeFiles Value="$(ProjOutDir);$(LazarusDir)\ide\include\$(TargetOS);$(LazarusDir)\images;$(LazarusDir)\ideintf\images"/>
+@@ -122,7 +122,7 @@
+           <Version Value="11"/>
+           <PathDelim Value="\"/>
+           <Target>
+-            <Filename Value="bin\cheatengine-$(TargetCPU)-SSE4-AVX2"/>
++            <Filename Value="bin\LidorCE-$(TargetCPU)-SSE4-AVX2"/>
+           </Target>
+           <SearchPaths>
+             <IncludeFiles Value="$(ProjOutDir);$(LazarusDir)\ide\include\$(TargetOS);$(LazarusDir)\images;$(LazarusDir)\ideintf\images"/>
+@@ -3068,7 +3068,7 @@
+     <Version Value="11"/>
+     <PathDelim Value="\"/>
+     <Target>
+-      <Filename Value="bin\cheatengine-$(TargetCPU)"/>
++      <Filename Value="bin\LidorCE-$(TargetCPU)"/>
+     </Target>
+     <SearchPaths>
+       <IncludeFiles Value="$(ProjOutDir);$(LazarusDir)\ide\include\$(TargetOS);$(LazarusDir)\images;$(LazarusDir)\ideintf\images"/>
+@@ -3118,28 +3118,6 @@
+ -dNESTEDSTRUCTURES
+ -donebytejumps
+ -dNoODS"/>
+-      <OtherDefines Count="20">
+-        <Define0 Value="NOTMULTITHREADED"/>
+-        <Define1 Value="benchmarkps"/>
+-        <Define2 Value="cemain"/>
+-        <Define3 Value="NDEBUG"/>
+-        <Define4 Value="D3DDebug"/>
+-        <Define5 Value="NOVMX"/>
+-        <Define6 Value="CUSTOMFLOAT"/>
+-        <Define7 Value="XDEBUG"/>
+-        <Define8 Value="memleaksearch"/>
+-        <Define9 Value="checkassembleralphabet"/>
+-        <Define10 Value="memorymapped"/>
+-        <Define11 Value="privatebuild"/>
+-        <Define12 Value="DBVMFORAMDISWORKING"/>
+-        <Define13 Value="NESTEDSTRUCTURES"/>
+-        <Define14 Value="THREADNAMESUPPORT"/>
+-        <Define15 Value="LINUXTCCTEST"/>
+-        <Define16 Value="asserthexviewisthreadsafe"/>
+-        <Define17 Value="DEBUGPROTOCOL"/>
+-        <Define18 Value="NEWCHANGEREGONX86"/>
+-        <Define19 Value="overflowdebug"/>
+-      </OtherDefines>
+     </Other>
+   </CompilerOptions>
+   <Debugging>
+diff --git a/Cheat Engine/cheatengine.lpr b/Cheat Engine/cheatengine.lpr
+index e9826f11..be832cc1 100755
+--- a/Cheat Engine/cheatengine.lpr	
++++ b/Cheat Engine/cheatengine.lpr	
+@@ -290,7 +290,7 @@ var
+   noautorun: boolean;
+ 
+ begin
+-  Application.Title:='Cheat Engine 7.5';
++  Application.Title:='LidorCE 7.5';
+  //'Cheat Engine 7.3';
+   {$ifdef darwin}
+   macPortFixRegPath;
+diff --git a/Cheat Engine/dbk32/DBK32functions.pas b/Cheat Engine/dbk32/DBK32functions.pas
+index 2a89cf43..bde4b94a 100755
+--- a/Cheat Engine/dbk32/DBK32functions.pas	
++++ b/Cheat Engine/dbk32/DBK32functions.pas	
+@@ -3191,19 +3191,19 @@ begin
+         if not fileexists(dataloc) then
+         begin
+ 
+-          servicename:='CEDRIVER73';
++          servicename:='LidorCEDriver';
+           ultimapservicename:='ULTIMAP2';
+           processeventname:='DBKProcList60';
+           threadeventname:='DBKThreadList60';
+ 
+           if iswow64 then
+           begin
+-            sysfile:='dbk64.sys';
++            sysfile:='LidorCEDriver64.sys';
+             ultimapsysfile:='ultimap2-64.sys';
+           end
+           else
+           begin
+-            sysfile:='dbk32.sys';
++            sysfile:='LidorCEDriver32.sys';
+             ultimapsysfile:='';
+           end;
+ 
+diff --git a/DBKKernel/DBK64.inf b/DBKKernel/DBK64.inf
+index 0c9e9978..e77e66a4 100644
+--- a/DBKKernel/DBK64.inf
++++ b/DBKKernel/DBK64.inf
+@@ -1,5 +1,5 @@
+ ;
+-; DBK64.inf
++; LidorCEDriver64.inf
+ ;
+ 
+ [Version]
+@@ -7,12 +7,12 @@ Signature="$WINDOWS NT$"
+ Class=System
+ ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
+ Provider=%ManufacturerName%
+-CatalogFile=DBK64.cat
++CatalogFile=LidorCEDriver64.cat
+ DriverVer= ; TODO: set DriverVer in stampinf property pages
+ 
+ [DestinationDirs]
+ DefaultDestDir = 12
+-DBK64_Device_CoInstaller_CopyFiles = 11
++LidorCEDriver64_Device_CoInstaller_CopyFiles = 11
+ 
+ ; ================= Class section =====================
+ 
+@@ -20,7 +20,7 @@ DBK64_Device_CoInstaller_CopyFiles = 11
+ 1 = %DiskName%,,,""
+ 
+ [SourceDisksFiles]
+-DBK64.sys  = 1,,
++LidorCEDriver64.sys  = 1,,
+ WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+ 
+ ;*****************************************
+@@ -31,49 +31,49 @@ WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with
+ %ManufacturerName%=Standard,NT$ARCH$
+ 
+ [Standard.NT$ARCH$]
+-%DBK64.DeviceDesc%=DBK64_Device, Root\DBK64 ; TODO: edit hw-id
++%LidorCEDriver64.DeviceDesc%=LidorCEDriver64_Device, Root\LidorCEDriver64 ; TODO: edit hw-id
+ 
+-[DBK64_Device.NT]
++[LidorCEDriver64_Device.NT]
+ CopyFiles=Drivers_Dir
+ 
+ [Drivers_Dir]
+-DBK64.sys
++LidorCEDriver64.sys
+ 
+ ;-------------- Service installation
+-[DBK64_Device.NT.Services]
+-AddService = DBK64,%SPSVCINST_ASSOCSERVICE%, DBK64_Service_Inst
++[LidorCEDriver64_Device.NT.Services]
++AddService = LidorCEDriver64,%SPSVCINST_ASSOCSERVICE%, LidorCEDriver64_Service_Inst
+ 
+-; -------------- DBK64 driver install sections
+-[DBK64_Service_Inst]
+-DisplayName    = %DBK64.SVCDESC%
++; -------------- LidorCEDriver64 driver install sections
++[LidorCEDriver64_Service_Inst]
++DisplayName    = %LidorCEDriver64.SVCDESC%
+ ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+ StartType      = 3               ; SERVICE_DEMAND_START
+ ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+-ServiceBinary  = %12%\DBK64.sys
++ServiceBinary  = %12%\LidorCEDriver64.sys
+ 
+ ;
+-;--- DBK64_Device Coinstaller installation ------
++;--- LidorCEDriver64_Device Coinstaller installation ------
+ ;
+ 
+-[DBK64_Device.NT.CoInstallers]
+-AddReg=DBK64_Device_CoInstaller_AddReg
+-CopyFiles=DBK64_Device_CoInstaller_CopyFiles
++[LidorCEDriver64_Device.NT.CoInstallers]
++AddReg=LidorCEDriver64_Device_CoInstaller_AddReg
++CopyFiles=LidorCEDriver64_Device_CoInstaller_CopyFiles
+ 
+-[DBK64_Device_CoInstaller_AddReg]
++[LidorCEDriver64_Device_CoInstaller_AddReg]
+ HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+ 
+-[DBK64_Device_CoInstaller_CopyFiles]
++[LidorCEDriver64_Device_CoInstaller_CopyFiles]
+ WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+ 
+-[DBK64_Device.NT.Wdf]
+-KmdfService =  DBK64, DBK64_wdfsect
+-[DBK64_wdfsect]
++[LidorCEDriver64_Device.NT.Wdf]
++KmdfService =  LidorCEDriver64, LidorCEDriver64_wdfsect
++[LidorCEDriver64_wdfsect]
+ KmdfLibraryVersion = $KMDFVERSION$
+ 
+ [Strings]
+ SPSVCINST_ASSOCSERVICE= 0x00000002
+-ManufacturerName="Cheat Engine" ;TODO: Replace with your manufacturer name
++ManufacturerName="LidorCEDriver64" ;TODO: Replace with your manufacturer name
+ ClassName="System" ; TODO: edit ClassName
+-DiskName = "DBK64 Installation Disk"
+-DBK64.DeviceDesc = "DBK64 Device"
+-DBK64.SVCDESC = "DBK64 Service"
++DiskName = "LidorCEDriver64 Installation Disk"
++LidorCEDriver64.DeviceDesc = "LidorCEDriver64 Device"
++LidorCEDriver64.SVCDESC = "LidorCEDriver64 Service"
+diff --git a/DBKKernel/DBKKernel.vcxproj b/DBKKernel/DBKKernel.vcxproj
+index 98a6dd06..6d0cf43a 100644
+--- a/DBKKernel/DBKKernel.vcxproj
++++ b/DBKKernel/DBKKernel.vcxproj
+@@ -62,7 +62,7 @@
+   </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>$(LatestTargetVersion)</TargetVersion>
+     <UseDebugLibraries>true</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+@@ -70,7 +70,7 @@
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>$(LatestTargetVersion)</TargetVersion>
+     <UseDebugLibraries>false</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+@@ -78,7 +78,7 @@
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release without sig|Win32'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>$(LatestTargetVersion)</TargetVersion>
+     <UseDebugLibraries>false</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+@@ -86,7 +86,7 @@
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>$(LatestTargetVersion)</TargetVersion>
+     <UseDebugLibraries>true</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+@@ -94,7 +94,7 @@
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>$(LatestTargetVersion)</TargetVersion>
+     <UseDebugLibraries>false</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+@@ -102,12 +102,13 @@
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release without sig|x64'" Label="Configuration">
+-    <TargetVersion>Windows7</TargetVersion>
++    <TargetVersion>Windows10</TargetVersion>
+     <UseDebugLibraries>false</UseDebugLibraries>
+     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+     <ConfigurationType>Driver</ConfigurationType>
+     <DriverType>KMDF</DriverType>
+     <DriverTargetPlatform>Desktop</DriverTargetPlatform>
++    <Driver_SpectreMitigation>Spectre</Driver_SpectreMitigation>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+     <TargetVersion>Windows10</TargetVersion>
+@@ -205,7 +206,7 @@
+     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+     <TimeStampServer>http://timestamp.globalsign.com/?signature=sha2</TimeStampServer>
+     <OutDir>..\Cheat Engine\bin\</OutDir>
+-    <TargetName>DBK64</TargetName>
++    <TargetName>LidorCEDriver64</TargetName>
+     <Inf2CatUseLocalTime>true</Inf2CatUseLocalTime>
+     <EnableInf2cat>false</EnableInf2cat>
+     <Inf2CatNoCatalog>true</Inf2CatNoCatalog>
+@@ -271,6 +272,7 @@ makecab /f "$(ProjectDir)\dbk64.ddf"
+       <Optimization>Disabled</Optimization>
+       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
++      <TreatWarningAsError>false</TreatWarningAsError>
+     </ClCompile>
+     <Link>
+       <AdditionalDependencies>$(DDK_LIB_PATH)Ntstrsafe.lib;%(AdditionalDependencies)</AdditionalDependencies>
+@@ -280,7 +282,8 @@ makecab /f "$(ProjectDir)\dbk64.ddf"
+       <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
+     </DriverSign>
+     <PostBuildEvent>
+-      <Command>"$(WDKBinRoot_x64)\signtool.exe" sign /a /ac "$(TargetDir)..\release\sig\GlobalSign Root CA.crt" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 "$(TargetPath)"</Command>
++      <Command>
++      </Command>
+     </PostBuildEvent>
+     <PostBuildEvent>
+       <Message>Sign the CE driver</Message>
